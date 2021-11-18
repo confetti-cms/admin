@@ -10,8 +10,8 @@ to learn more.
 Github**. In order to `npm install` FormKit you will need to be:
 
 1. Added as a collaborator to the `@formkit/formkit` repo on Github.
-2. Authenticated with Github via an `~/.npmrc` entry or via `npm` on the command line.
-3. Have an `.npmrc` file for the `@formkit` scope in the root of your project directory.
+<!-- 2. Authenticated with Github via an `~/.npmrc` entry or via `npm` on the command line. -->
+2. Have an `.npmrc` file for the `@formkit` scope in the root of your project directory.
 
 ### 1) Joining the `@formkit/formkit` repo
 
@@ -19,7 +19,7 @@ All active Alpha and Beta members will be added as collaborators to the repo. If
 have not been added and believe this is in error, then please message us via the
 community Discord in the `#formkit-general-chat` channel: https://discord.gg/NZ6nchBDGx
 
-### 2) Authenticating with Github Packages
+<!-- ### 2) Authenticating with Github Packages
 
 In order to download private Github packages via `npm` you will need to [create a
 personal access token (PAT)](https://github.com/settings/tokens) in your Github
@@ -41,9 +41,9 @@ $ npm login --scope=@formkit --registry=https://npm.pkg.github.com
 > Username: GITHUB_USERNAME
 > Password: PERSONAL_ACCESS_TOKEN
 > Email: PUBLIC_EMAIL_ADDRESS
-```
+``` -->
 
-### 3) Adding a `.npmrc` file to your project.
+### 2) Adding a `.npmrc` file to your project.
 
 Lastly, you will need to create an `.npmrc` file in your project adjacent to your
 `package.json` file that sets the `@formkit` scope to Github Packages.
