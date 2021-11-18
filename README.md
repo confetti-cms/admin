@@ -1,4 +1,4 @@
-# Vue 3 + Vite | FormKit Alpha Starter Project
+# FormKit Vue Starter Project
 
 This template should help get you started using FormKit with Vue 3 in Vite.
 The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup)
@@ -18,7 +18,7 @@ All active Alpha and Beta members will be added as collaborators to the repo. If
 have not been added and believe this is in error, then please message us via the
 community Discord in the `#formkit-general-chat` channel: https://discord.gg/NZ6nchBDGx
 
-### Signing in to Github with `npm` on the command line
+### Authenticating with Github Packages
 
 In order to download private Github packages via `npm` you will need to [create a
 personal access token (PAT)](https://github.com/settings/tokens) in your Github
