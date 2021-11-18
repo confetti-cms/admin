@@ -7,24 +7,25 @@ to learn more.
 ## Installation from Github
 
 **During the Alpha and Beta phases of development, FormKit packages will be hosted on
-Github**. In order to `npm install` FormKit you will need to be added as a collaborator
-to the `@formkit/formkit` repo on Github, be signed into your Github account with `npm`
-on the command line, and have an `.npmrc` file for the `@formkit` scope in your
-project directory.
+Github**. In order to `npm install` FormKit you will need to be:
 
-### Joining the `@formkit/formkit` repo
+1. Added as a collaborator to the `@formkit/formkit` repo on Github.
+2. Authenticated with Github via an `~/.npmrc` entry or via `npm` on the command line.
+3. Have an `.npmrc` file for the `@formkit` scope in the root of your project directory.
+
+### 1) Joining the `@formkit/formkit` repo
 
 All active Alpha and Beta members will be added as collaborators to the repo. If you
 have not been added and believe this is in error, then please message us via the
 community Discord in the `#formkit-general-chat` channel: https://discord.gg/NZ6nchBDGx
 
-### Authenticating with Github Packages
+### 2) Authenticating with Github Packages
 
 In order to download private Github packages via `npm` you will need to [create a
 personal access token (PAT)](https://github.com/settings/tokens) in your Github
-account with the `read:packages` scope enabled.
+account with at least the `repo` and `read:packages` scopes enabled.
 
-You can either add the token to your `~/.npmrc` file:
+Next, you can either add the token to your global `~/.npmrc` file:
 
 ```bash
 //npm.pkg.github.com/:_authToken=TOKEN
@@ -35,15 +36,15 @@ Or sign in via the command line with the `@formkit` scope flag set:
 ```bash
 $ npm login --scope=@formkit --registry=https://npm.pkg.github.com
 
-> Username: USERNAME
-> Password: TOKEN
-> Email: PUBLIC-EMAIL-ADDRESS
+> Username: GITHUB_USERNAME
+> Password: PERSONAL_ACCESS_TOKEN
+> Email: PUBLIC_EMAIL_ADDRESS
 ```
 
-### Adding a `.npmrc` file to your project.
+### 3) Adding a `.npmrc` file to your project.
 
-Lastly, you will need to create an `.npmrc` file in your project for the
-`@formkit` scope so that installs requests will be directed to Github Packages.
+Lastly, you will need to create an `.npmrc` file in your project adjacent to your
+`package.json` file that sets the `@formkit` scope to Github Packages.
 For this starter project, the `.npmrc` file already exists.
 
 ```bash
