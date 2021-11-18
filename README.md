@@ -30,8 +30,10 @@ Next, you can either add the token to your global `~/.npmrc` file:
 ```bash
 //npm.pkg.github.com/:_authToken=TOKEN
 ```
+#### — OR –
 
-Or sign in via the command line with the `@formkit` scope flag set:
+Sign in via the command line with the `@formkit` scope flag set.
+** the password prompt requires your Personal Access Token, not your GitHub password. **
 
 ```bash
 $ npm login --scope=@formkit --registry=https://npm.pkg.github.com
