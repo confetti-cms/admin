@@ -9,7 +9,7 @@ to learn more.
 Please follow the [instructions in the FormKit documentation](https://docs.formkit.com/essentials/installation) to install from Github.
 ## Local Development
 
-Once FormKit is installed your setup is complete you can install and start your dev! The
+Once FormKit is installed, your setup is complete you can install and start your dev! The
 `@formkit/vue` package is already added to the `package.json` file for this project.
 
 ```bash
