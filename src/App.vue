@@ -173,6 +173,7 @@ pre.form-data {
   border-radius: 0.5em;
 }
 
+/*noinspection CssUnusedSymbol*/
 .formkit-actions{
   padding-top: 20px;
 }
