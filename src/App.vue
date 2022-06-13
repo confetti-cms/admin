@@ -1,39 +1,9 @@
 <template>
   <div class="container">
     <div class="sample-input">
-      <h1>FormKit Starter Project</h1>
-      <FormKit
-        type="group"
-        v-model="formData"
-      >
-        <FormKit
-          name="hello_world"
-          label="Hello World"
-          placeholder="Enter something here..."
-          validation="required"
-          validation-behavior="live"
-          help="Read the docs for more info on using FormKit"
-        />
-        <FormKit
-          name="opinion"
-          label="Opinion"
-          help="How excited are you about FormKit?"
-          type="radio"
-          value="A lot"
-          :options="['A little', 'A lot']"
-        />
-        <div class="side-by-side">
-          <FormKit
-            name="recommendation"
-            label="Recommendation"
-            v-model="recommendation"
-            help="How likely are you to recommend FormKit to a friend?"
-            type="range"
-            min="0"
-            max="10"
-          />
-          <pre class="range-output">{{ recommendation }} </pre>
-        </div>
+      <h1>Profile</h1>
+      <FormKit type="form" v-model="formData" v-if="schema">
+        <FormKitSchema :schema="schema" :data="formData"/>
       </FormKit>
 
       <h2>Modeled group values</h2>
@@ -43,18 +13,83 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import {ref} from 'vue'
+import allComponents from '/Users/reindertvetter/dev/confetti-cms/render-blade/components.json'
+
+
+function getElement(component) {
+  if (component.type === 'section') {
+    return "fieldset";
+  }
+
+  return null;
+}
+function getFormKitType(component) {
+  switch (component.type) {
+    case 'text':
+      return "text";
+    case 'number':
+      return "number";
+    case 'image':
+      return "file";
+    default:
+      console.warn('type: ' + component.type)
+      return "text";
+  }
+}
+
+function mapComponentsToSchema(components) {
+
+  let schema = [];
+  components.forEach((component) => {
+
+    let schemaItem = {
+      ...(component.type === 'section') && {$el: getElement(component)},
+      ...(component.type !== 'section') && {$formkit: getFormKitType(component)},
+      label: component.label,
+      name: component.key,
+      children: [
+        component.label,
+        ...mapComponentsToSchema(find(allComponents, component.key))
+      ],
+    };
+
+    schema.push(schemaItem)
+  })
+
+  return schema;
+}
+
+function find(collection, key) {
+  return collection.filter(function (elem) {
+    if (elem.parent_key === key) {
+      return elem;
+    }
+  })
+}
 
 export default {
+
+
   setup() {
+    const schema = ref(null);
+
+    let rootComponents = find(allComponents, "")
+
+    schema.value = mapComponentsToSchema(rootComponents);
+
+    console.log(JSON.parse(JSON.stringify(schema.value)))
+
     const recommendation = ref('10')
     const formData = ref({})
 
     return {
       recommendation,
+      schema,
       formData
     }
-  }
+  },
+
 }
 </script>
 
