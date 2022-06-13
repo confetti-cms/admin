@@ -95,6 +95,7 @@ export default {
 
 
 <style>
+/*noinspection CssUnusedSymbol*/
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -109,11 +110,13 @@ export default {
   justify-content: center;
 }
 
+/*noinspection CssUnusedSymbol*/
 .side-by-side {
   display: flex;
   align-items: flex-start;
 }
 
+/*noinspection CssUnusedSymbol*/
 pre.range-output {
   background: #eee;
   border-radius: 0.5em;
