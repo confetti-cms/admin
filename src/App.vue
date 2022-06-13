@@ -16,14 +16,79 @@
 import {ref} from 'vue'
 import allComponents from '/Users/reindertvetter/dev/confetti-cms/render-blade/components.json'
 
+function mapComponentsToSchema(components, iteration = null) {
+  let keySuffix = '';
+  if (iteration !== null) {
+    keySuffix = keySuffix + '-' + iteration;
+  }
+
+  let schema = [];
+  components.forEach((component) => {
+
+    let schemaItem;
+
+    if (component.type === 'multiple') {
+      for (let i = 0; i < 2; i++) {
+        {
+          schemaItem = {
+            $el: 'fieldset',
+            children: mapComponentsToSchema(find(allComponents, component.key), i)
+          }
+          schema.push(schemaItem)
+        }
+      }
+    } else {
+      schemaItem = {
+        ...(component.type === 'section') && {$el: getElement(component)},
+        ...(component.type !== 'section') && {$formkit: getFormKitType(component)},
+        label: component.label,
+        name: component.key + keySuffix,
+        placeholder: component.placeholder !== '' ? component.placeholder : component.label,
+        help: component.help,
+        validation: getValidation(component),
+        children: [
+          component.label,
+          ...mapComponentsToSchema(find(allComponents, component.key))
+        ],
+      };
+
+      schema.push(schemaItem)
+    }
+  })
+
+  return schema;
+}
+
+function find(collection, key) {
+  return collection.filter(function (elem) {
+    if (elem.parent_key === key) {
+      return elem;
+    }
+  })
+}
 
 function getElement(component) {
   if (component.type === 'section') {
-    return "fieldset";
+    return "div";
   }
 
   return null;
 }
+function getValidation(component) {
+  let validations = []
+  if (component.min_apply) {
+    validations.push('min:' + component.min);
+  }
+  if (component.max_apply) {
+    validations.push('max:' + component.max);
+  }
+  if (component.required) {
+    validations.push('required');
+  }
+
+  return validations.join('|');
+}
+
 function getFormKitType(component) {
   switch (component.type) {
     case 'text':
@@ -36,36 +101,6 @@ function getFormKitType(component) {
       console.warn('type: ' + component.type)
       return "text";
   }
-}
-
-function mapComponentsToSchema(components) {
-
-  let schema = [];
-  components.forEach((component) => {
-
-    let schemaItem = {
-      ...(component.type === 'section') && {$el: getElement(component)},
-      ...(component.type !== 'section') && {$formkit: getFormKitType(component)},
-      label: component.label,
-      name: component.key,
-      children: [
-        component.label,
-        ...mapComponentsToSchema(find(allComponents, component.key))
-      ],
-    };
-
-    schema.push(schemaItem)
-  })
-
-  return schema;
-}
-
-function find(collection, key) {
-  return collection.filter(function (elem) {
-    if (elem.parent_key === key) {
-      return elem;
-    }
-  })
 }
 
 export default {
@@ -106,7 +141,7 @@ export default {
 
 .container {
   margin: auto;
-  display: flex;
+  width: 80%;
   justify-content: center;
 }
 
@@ -136,5 +171,15 @@ pre.form-data {
   width: 100%;
   padding: 1em;
   border-radius: 0.5em;
+}
+
+.formkit-actions{
+  padding-top: 20px;
+}
+
+fieldset {
+  display: inline-table;
+  border-radius: 4px;
+  border-width: 1px;
 }
 </style>
