@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="sample-input">
-      <h1>Profile</h1>
+      <h1>Introduction</h1>
       <FormKit type="form" v-model="formData" v-if="schema">
         <FormKitSchema :schema="schema" :data="formData"/>
       </FormKit>
@@ -14,12 +14,12 @@
 
 <script>
 import {ref} from 'vue'
-import allComponents from '/Users/reindertvetter/dev/confetti-cms/render-blade/components.json'
+import allComponents from '/Users/reindertvetter/dev/confetti-cms/render-form/storage/components/views/index.blade.php.json'
 
-function mapComponentsToSchema(components, iteration = null) {
+function mapComponentsToSchema(components, groupId) {
   let keySuffix = '';
-  if (iteration !== null) {
-    keySuffix = keySuffix + '-' + iteration;
+  if (groupId !== null) {
+    keySuffix = keySuffix + '-' + groupId;
   }
 
   let schema = [];
@@ -30,26 +30,35 @@ function mapComponentsToSchema(components, iteration = null) {
     if (component.type === 'multiple') {
       for (let i = 0; i < 2; i++) {
         {
+          let oneOfMultipleGroupId = uuid();
+          let belongsTo = {
+            $formkit: 'hidden',
+            name: component.key + '.belongs_to-' + oneOfMultipleGroupId,
+            value: groupId
+          };
           schemaItem = {
             $el: 'fieldset',
-            children: mapComponentsToSchema(find(allComponents, component.key), i)
+            children: [
+              belongsTo,
+              ...mapComponentsToSchema(find(allComponents, component.key), oneOfMultipleGroupId)
+            ]
           }
           schema.push(schemaItem)
         }
       }
     } else {
+      let label = component.label !== '' ? component.label : component.key;
+
+      let isEl = isElement(component)
       schemaItem = {
-        ...(component.type === 'section') && {$el: getElement(component)},
-        ...(component.type !== 'section') && {$formkit: getFormKitType(component)},
-        label: component.label,
+        ...isEl && {$el: getElement(component)},
+        ...!isEl && {$formkit: getFormKitType(component)},
+        label: label,
         name: component.key + keySuffix,
-        placeholder: component.placeholder !== '' ? component.placeholder : component.label,
+        placeholder: component.placeholder !== '' ? component.placeholder : label,
         help: component.help,
         validation: getValidation(component),
-        children: [
-          component.label,
-          ...mapComponentsToSchema(find(allComponents, component.key))
-        ],
+        children: mapComponentsToSchema(find(allComponents, component.key), groupId),
       };
 
       schema.push(schemaItem)
@@ -71,9 +80,24 @@ function getElement(component) {
   if (component.type === 'section') {
     return "div";
   }
+  if (component.type === '') {
+    return "div";
+  }
 
   return null;
 }
+
+function isElement(component) {
+  switch (component.type) {
+    case 'section':
+      return 'dev';
+    case 'localFile':
+      return 'h1';
+    default:
+      return false
+  }
+}
+
 function getValidation(component) {
   let validations = []
   if (component.min_apply) {
@@ -91,29 +115,61 @@ function getValidation(component) {
 
 function getFormKitType(component) {
   switch (component.type) {
-    case 'text':
-      return "text";
-    case 'number':
-      return "number";
+    case 'checkbox':
+      return 'checkbox';
+    case 'color':
+      return 'color';
+    case 'date':
+      return 'date';
+    case 'dateTime':
+      return 'datetime-local';
+    case 'email':
+      return 'email';
     case 'image':
       return "file";
+    case 'month':
+      return 'month';
+    case 'number':
+      return "number";
+    case 'radio':
+      return 'radio';
+    case 'range':
+      return 'range';
+    case 'select':
+      return 'select';
+    case 'telephone':
+      return 'tel';
+    case 'text':
+      return "text";
+    case 'textarea':
+      return 'textarea';
+    case 'time':
+      return 'time';
+    case 'url':
+      return 'url';
+    case 'localFile':
+      return 'h1';
     default:
       console.warn('type: ' + component.type)
-      return "text";
+      return "unknown";
   }
 }
 
+function uuid() {
+  return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+      (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+  );
+}
+
 export default {
-
-
   setup() {
     const schema = ref(null);
 
     let rootComponents = find(allComponents, "")
 
-    schema.value = mapComponentsToSchema(rootComponents);
+    schema.value = mapComponentsToSchema(rootComponents, uuid());
 
-    console.log(JSON.parse(JSON.stringify(schema.value)))
+    console.debug(JSON.parse(JSON.stringify(schema.value)))
 
     const recommendation = ref('10')
     const formData = ref({})
@@ -124,7 +180,6 @@ export default {
       formData
     }
   },
-
 }
 </script>
 
@@ -174,7 +229,7 @@ pre.form-data {
 }
 
 /*noinspection CssUnusedSymbol*/
-.formkit-actions{
+.formkit-actions {
   padding-top: 20px;
 }
 
