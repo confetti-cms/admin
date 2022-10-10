@@ -1,0 +1,34 @@
+[
+ {
+  "parent_key": "",
+  "key": "views/page_back.blade.php",
+  "type": "localFile",
+  "label": "",
+  "placeholder": "",
+  "help": "",
+  "required": false,
+  "min": 0,
+  "min_apply": false,
+  "max": 0,
+  "max_apply": false,
+  "width": 0,
+  "width_max": 0,
+  "width_min": 0,
+  "height": 0,
+  "height_max": 0,
+  "height_min": 0,
+  "ratio_width": 0,
+  "ratio_height": 0,
+  "auto_crop": false,
+  "by_directory": "",
+  "by_section": "",
+  "object_name": "22455387667b9596111d4116442ef99deb1cd377",
+  "source": {
+   "directory": "views",
+   "file": "page_back.blade.php",
+   "line": 0,
+   "from": 0,
+   "to": 5692
+  }
+ }
+]
