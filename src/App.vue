@@ -13,7 +13,7 @@
 
 <script>
 import { ref } from "vue";
-import allComponents from "/Users/reindertvetter/dev/confetti-cms/admin/storage/components/views/home.blade.php.json";
+import allComponents from "../storage/components/views/home.blade.php.json";
 
 function mapComponentsToSchema(components, groupId) {
   let keySuffix = "";
