@@ -10,6 +10,10 @@ import Pages from './modules/pages/pages-overview.vue';
 import PageEdit from './modules/pages/page-edit.vue';
 import Posts from './modules/posts.vue';
 
+import '@fortawesome/fontawesome-free/css/all.css'
+import '@fortawesome/fontawesome-free/js/all.js'
+
+
 const routes = [
     {
         path: '/',

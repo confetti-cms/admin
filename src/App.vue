@@ -29,6 +29,7 @@ const menuItems = [
       </div>
       <ul class="flex flex-col gap-3">
         <li v-for="{ id, route, label } in menuItems" :key="`main-menu-${id}`">
+          <i class="fa fa-envelope"></i>
           <router-link
             :to="route"
             class="py-2.7 text-md ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
