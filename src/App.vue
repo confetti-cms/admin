@@ -3,37 +3,42 @@ const menuItems = [
   {
     id: 1,
     route: "/",
-    label: "Home",
-    icon: "",
+    label: "Dashboard",
+    icon: "fa-solid fa-house",
   },
   {
     id: 2,
     route: "/pages",
     label: "Paginas",
-    icon: "",
+    icon: "fa-solid fa-file-lines",
   },
   {
     id: 3,
     route: "/Berichten",
     label: "Berichten",
-    icon: "",
+    icon: "fa-solid fa-file-pen",
   },
 ];
 </script>
 
 <template>
   <div class="flex h-screen">
-    <div class="bg-gray-50 pt-10 px-4">
-      <div class="logo h-20 mb-4">
+    <div class="bg-gray-50 pt-10 px-4 w-52">
+      <div class="logo h-20 mb-4 -mt-[24px]">
         <img class="max-h-full" src="/placeholder-logo.png" />
       </div>
       <ul class="flex flex-col gap-3">
-        <li v-for="{ id, route, label } in menuItems" :key="`main-menu-${id}`">
-          <i class="fa fa-envelope"></i>
+        <li
+          v-for="{ id, route, label, icon } in menuItems"
+          :key="`main-menu-${id}`"
+        >
           <router-link
             :to="route"
-            class="py-2.7 text-md ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
+            class="flex items-center gap-2 hover:bg-white hover:font-semibold hover:drop-shadow-md rounded-md text-md whitespace-nowrap py-2 ease-in duration-150"
           >
+            <div class="flex items-center justify-center w-[40px] h-[40px]">
+              <i :class="icon" class="text-xl"></i>
+            </div>
             {{ label }}
           </router-link>
         </li>
@@ -44,3 +49,9 @@ const menuItems = [
     </div>
   </div>
 </template>
+
+<style lang="scss">
+.router-link-active {
+  @apply bg-white drop-shadow-md font-semibold;
+}
+</style>

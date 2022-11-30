@@ -6,22 +6,23 @@ import pageTemplate from "../components/structure/page-template.vue";
 
 <template>
   <pageTemplate title="Dashboard">
-    <div class="flex">
-      <cfi-card> dsdsdsdsds </cfi-card>
-      <cfi-card> dsdsdsdsds </cfi-card>
+    <div class="flex gap-4">
+      <cfi-card> card left </cfi-card>
+      <cfi-card> card right </cfi-card>
     </div>
-    <cfi-button icon="far fa-envelope">dssdsd</cfi-button>
-    <cfi-button full-width>dssdsd</cfi-button>
-    <cfi-button type="ghost">dssdsd</cfi-button>
-    <cfi-button type="clear" icon="far fa-envelope">dssdsd</cfi-button>
-    <cfi-button disabled>dssdsd</cfi-button>
+    <cfi-button icon="far fa-envelope">default button</cfi-button>
+    <cfi-button full-width>full width button</cfi-button>
+    <cfi-button type="ghost">ghost button</cfi-button>
+    <cfi-button type="clear" icon="far fa-envelope">clear button</cfi-button>
+    <cfi-button disabled>disabled button</cfi-button>
     <cfi-button
       classes="w-full bg-gray-100"
       icon="far fa-envelope"
       icon-position="right"
-      >hierooo</cfi-button
     >
-    <cfi-button anchor icon="far fa-envelope">iconjaaa dssdsd</cfi-button>
+      icon right position
+    </cfi-button>
+    <cfi-button anchor icon="far fa-envelope">anchor button</cfi-button>
   </pageTemplate>
 </template>
 
