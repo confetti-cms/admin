@@ -1,58 +1,27 @@
-<script setup>
+<script setup lang="ts">
 import cfiTable from "../../components/cfi-table.vue";
 import cfiCard from "../../components/cfi-card.vue";
 import pageTemplate from "../../components/structure/page-template.vue";
-const pages = [
-  {
-    id: 1,
-    value: "Home pagina",
-    date: "test",
-    categorieen: "cat1, cat2",
-  },
-  {
-    id: 2,
-    value: "Tekst pagina",
-    date: "test",
-    categorieen: "cat1, cat2",
-  },
-  {
-    id: 3,
-    value: "Contact pagina",
-    date: "test",
-    categorieen: "cat1, cat2",
-  },
-];
-const headers = [
-  {
-    name: "Pagina",
-  },
-  {
-    name: "Date",
-  },
-  {
-    name: "Categorieën",
-  },
-  {
-    name: "Status",
-  },
-];
+import { usePagesStore } from "../../store/pages";
+import { storeToRefs } from "pinia";
+import { pageHeaders } from "./data/page-headers";
+const { pages, isPagesLoading } = storeToRefs(usePagesStore());
 </script>
 
 <template>
   <pageTemplate title="Pagina's">
-    <cfi-card> dsdssd </cfi-card>
+    hieeeer: {{ isPagesLoading }}
     <cfi-card noSpace>
-      <cfi-table :headers="headers" :data="pages"></cfi-table>
+      <cfi-table :headers="pageHeaders" :data="pages">
+        <template #title="{ value: { id, title } }">
+          <router-link
+            :to="`pages/edit/${id}`"
+            class="p-2 rounded-md inline-block hover:text-gray-400"
+          >
+            {{ title }}
+          </router-link>
+        </template>
+      </cfi-table>
     </cfi-card>
-    <li>
-      <router-link
-        v-for="{ id, title } of pages"
-        :to="`pages/edit/${id}`"
-        class="p-2 rounded-md inline-block hover:bg-gray-800 text-white"
-      >
-        pages
-      </router-link>
-    </li>
-    <router-view></router-view>
   </pageTemplate>
 </template>

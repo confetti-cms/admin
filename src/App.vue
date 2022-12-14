@@ -1,4 +1,10 @@
 <script setup lang="ts">
+import { mockRequest } from "./api/helpers/mockRequest";
+import { usePagesStore } from "./store/pages";
+const store = usePagesStore();
+
+store.getPages();
+
 const menuItems = [
   {
     id: 1,

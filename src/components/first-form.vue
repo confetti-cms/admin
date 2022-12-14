@@ -2,6 +2,80 @@
 import { ref } from "vue";
 import allComponents from "../../storage/components/views/home.blade.php.json";
 
+const data = [
+  {
+    parent_key: "pages.intro",
+    key: "pages.intro.shape",
+    type: "select",
+    decorations: [
+      {
+        type: "label",
+        value: "Shape",
+      },
+      {
+        type: "placeholder",
+        value: "brood",
+      },
+      {
+        type: "options",
+        options: [
+          {
+            key: "shape1",
+            value: "Cycle",
+          },
+          {
+            key: "shape2",
+            value: "Square",
+          },
+        ],
+      },
+      {
+        type: "prefix",
+        image_url: "https://confetti-cms.com/assets/icon_title.png",
+      },
+    ],
+    source: {
+      directory: "views",
+      file: "home.blade.php",
+      line: 43,
+      from: 27,
+      to: 34,
+    },
+  },
+];
+
+const decorationValueKeys = {
+  options: "options",
+  prefix: "image_url",
+};
+
+function getDecorationValueKey(type) {
+  return decorationValueKeys[type] || "value";
+}
+
+function getDecorationOptions(decorations) {
+  return decorations.reduce((list, decoration) => {
+    const decorationKey = decoration.type;
+    const valueKey = getDecorationValueKey(decoration.type);
+    const value = decoration[valueKey];
+    console.log("value", value);
+    return {
+      ...list,
+      [decorationKey]: value,
+    };
+  }, {});
+}
+
+const shema = data.map((component) => {
+  return {
+    $el: component.type,
+    ...getDecorationOptions(component.decorations),
+  };
+  return component;
+});
+
+console.log("shema", shema);
+
 function mapComponentsToSchema(components, groupId) {
   let keySuffix = "";
   if (groupId !== null) {
@@ -152,6 +226,13 @@ function getValidation(component) {
 }
 
 function getFormKitType(component) {
+  const formKitComponentsObj: {
+    checkbox: "checkbox";
+    color: "color";
+    telephone: "tel";
+  };
+  const formKitcomponent = formKitComponentsObj[component.type];
+
   switch (component.type) {
     case "checkbox":
       return "checkbox";

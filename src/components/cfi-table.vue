@@ -25,8 +25,8 @@ const prop = defineProps({
         class="px-5 py-4 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent"
         v-for="header in headers"
       >
-        <slot :name="header.name.toLowerCase()">
-          {{ row.value }}
+        <slot :name="header.key.replace(' ', '-').toLowerCase()" :value="row">
+          {{ row[header.key] }}
         </slot>
       </td>
     </tr>
