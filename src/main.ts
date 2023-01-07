@@ -10,7 +10,10 @@ import "@formkit/pro/genesis";
 import Dashboard from "./modules/dashboard.vue";
 import Pages from "./modules/pages/pages-overview.vue";
 import PageEdit from "./modules/pages/page-edit.vue";
+import Services from "./modules/services/services-overview.vue";
+import ServicesEdit from "./modules/services/service-edit.vue";
 import Posts from "./modules/posts.vue";
+import { useMenuStore } from "./store/menu";
 import { createProPlugin, inputs, repeater } from "@formkit/pro";
 
 import "@fortawesome/fontawesome-free/css/all.css";
@@ -39,8 +42,35 @@ const routes = [
     name: "Posts",
     component: Posts,
   },
+  {
+    path: "/:service",
+    name: "service",
+    component: Services,
+    async beforeEnter(to, from) {
+      let store = useMenuStore();
+      console.log('to', to.params.service);
+      console.log('store', store.menu);
+      const menu = store.menu;
+      
+
+      // block navigation
+      return false;
+    }
+  },
+  {
+    path: "/:service/edit/:id",
+    name: "serviceEdit",
+    component: ServicesEdit,
+  },
 ];
 const router = createRouter({ history: createWebHistory(), routes });
+
+// router.beforeEach((to) => {
+//   console.log('jaa');
+//   if (to.name !== 'Home') {
+//     return '/'
+//   }
+// })
 
 const pro = createProPlugin("fk-b50da1a3d1", inputs);
 

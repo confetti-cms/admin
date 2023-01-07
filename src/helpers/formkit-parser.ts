@@ -50,12 +50,12 @@ function getDecorationOptions(decorations) {
 // end of decorator helpers
 
 const formkitNodeAliases = {
-  section: "group",
+  section: "form",
   image: "file",
 };
 
 const formkitNodeTypes = {
-  $formkit: ["text", "select", "group", "repeater", "url", "file"],
+  $formkit: ["text", "select", "form", "group", "repeater", "url", "file"],
   $cmp: "[image_url]",
   $el: ["text", "select"],
 };
@@ -72,30 +72,71 @@ function getFormKitType(component) {
   return { node: nodeType, type: currentType };
 }
 
-const formKitModifiers = {
-  repeater: (node, data) => {
-    const children = data.filter((entry) => {
-      return entry.parent_key === node.key;
-    });
-    const converted = parseFormKitSchema(children);
+function generateUuid() {
+  return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
+    (
+      c ^
+      (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
+    ).toString(16)
+  );
+}
+
+const nodeModifiers = {
+  group: (_, schema) => {
     return {
-      children: converted,
+      $el: "section",
+      children: [
+        {
+          $el: "hr",
+        },
+        schema,
+      ],
     };
   },
 };
 
-export function parseFormKitSchema(data) {
-  return data.map((component) => {
-    const { node, type } = getFormKitType(component);
-    let props = getDecorationOptions(component.decorations);
-    if (formKitModifiers[type]) {
-      props = { ...props, ...formKitModifiers[type](component, data) };
-    }
+function parseToFormKitSchema(component) {
+  const { node, type } = getFormKitType(component);
+  let props = getDecorationOptions(component.decorations);
+  let schema = {
+    [node]: type,
+    id: generateUuid(),
+    ...props,
+  };
 
-    return {
-      [node]: type,
-      ...props,
-    };
-    return component;
-  });
+  if (component.children) {
+    schema["children"] = component.children;
+  }
+
+  if (nodeModifiers[type]) {
+    schema = nodeModifiers[type](component, schema);
+    console.log("schema", schema);
+  }
+
+  return schema;
+}
+
+export function parseComponentsToFormKitSchema(data) {
+  return data.map(parseToFormKitSchema);
+}
+
+export function parseFormKitGroepSchema(data) {
+  let parent = data.find((e) => !e["parent_key"]);
+
+  function getChildren(parent) {
+    const children = data.filter((entry) => {
+      return entry.parent_key === parent.key;
+    });
+    if (children.length > 0) {
+      children.forEach((child) => {
+        getChildren(child);
+      });
+      const converted = parseComponentsToFormKitSchema(children);
+      parent["children"] = converted;
+    }
+    return parent;
+  }
+  getChildren(parent);
+  const schema = parseToFormKitSchema(parent);
+  return [schema];
 }

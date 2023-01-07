@@ -28,8 +28,8 @@ const menuItems = [
 </script>
 
 <template>
-  <div class="flex h-screen">
-    <div class="bg-gray-50 pt-10 px-4 w-52">
+  <main class="flex h-screen">
+    <nav class="bg-gray-50 pt-10 px-4 w-52">
       <div class="logo h-20 mb-4 -mt-[24px]">
         <img class="max-h-full" src="/placeholder-logo.png" />
       </div>
@@ -49,11 +49,11 @@ const menuItems = [
           </router-link>
         </li>
       </ul>
-    </div>
-    <div class="bg-gray-50 flex-grow px-8 pt-10">
+    </nav>
+    <section class="bg-gray-50 flex-grow px-8 pt-10 overflow-y-scroll">
       <router-view></router-view>
-    </div>
-  </div>
+    </section>
+  </main>
 </template>
 
 <style lang="scss">

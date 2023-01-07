@@ -17,7 +17,6 @@ let store = usePagesStore();
 const { pages, isPagesLoaded, getPageById } = storeToRefs(store);
 const currentPage = computed(() => {
   const id = route.params.id;
-  console.log("id", id);
   return getPageById.value(parseInt(id));
 });
 
