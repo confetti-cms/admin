@@ -1,91 +1,5 @@
 import { defineStore } from "pinia";
-import { mockRequest } from "../api/helpers/mockRequest";
-
-const getPages = mockRequest(
-  [
-    {
-      id: 1,
-      title: "Home pagina",
-      date: new Date(),
-      categories: "cat1, cat2",
-      status: "gepubliceerd",
-      formSchema: [
-        {
-          $el: "h1",
-          children: "Register",
-        },
-        {
-          $formkit: "text",
-          name: "email",
-          label: "Email",
-          help: "This will be used for your account.",
-          validation: "required|email",
-        },
-      ],
-    },
-    {
-      id: 2,
-      title: "Tekst pagina",
-      date: new Date(),
-      categories: "cat1, cat2",
-      status: "gepubliceerd",
-      formSchema: [
-        {
-          $el: "h1",
-          children: "Register",
-        },
-        {
-          $formkit: "text",
-          name: "email",
-          label: "Email",
-          help: "This will be used for your account.",
-          validation: "required|email",
-        },
-      ],
-    },
-    {
-      id: 4,
-      title: "Blog pagina",
-      date: new Date(),
-      categories: "cat1, cat2",
-      status: "gepubliceerd",
-      formSchema: [
-        {
-          $el: "h1",
-          children: "Register",
-        },
-        {
-          $formkit: "text",
-          name: "email",
-          label: "Email",
-          help: "This will be used for your account.",
-          validation: "required|email",
-        },
-      ],
-    },
-    {
-      id: 3,
-      title: "Contact pagina",
-      date: new Date(),
-      categories: "cat1, cat2",
-      status: "gepubliceerd",
-      formSchema: [
-        {
-          $el: "h1",
-          children: "Register",
-        },
-        {
-          $formkit: "text",
-          name: "email",
-          label: "Email",
-          help: "This will be used for your account.",
-          validation: "required|email",
-        },
-      ],
-    },
-  ],
-  100
-);
+import { getPagesRequest } from "../mockData/requests";
 
 export const usePagesStore = defineStore("pages", {
   state: () => {
@@ -99,7 +13,7 @@ export const usePagesStore = defineStore("pages", {
     getPages() {
       this.loading = true;
       this.loaded = false;
-      getPages().then((res: any) => {
+      getPagesRequest().then((res: any) => {
         console.log("res", res);
 
         this.pages = res;

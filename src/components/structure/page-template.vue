@@ -11,7 +11,7 @@ const prop = defineProps({
 </script>
 
 <template>
-  <div class="page-template">
+  <div class="page-template pt-4">
     <div class="page-title text-2xl mb-4" v-if="title">
       <slot name="title">
         {{ title }}

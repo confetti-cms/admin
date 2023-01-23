@@ -1,38 +1,47 @@
 import { defineStore } from "pinia";
-import { mockRequest } from "../api/helpers/mockRequest";
+import { getMainMenuRequest } from "../mockData/requests";
 
 export const useMenuStore = defineStore("menu", {
   state: () => {
     return {
       loading: false,
       loaded: false,
-      menu: [
-        {
-          id: 1,
-          route: "/",
-          label: "Dashboard",
-          icon: "fa-solid fa-house",
-        },
-        {
-          id: 2,
-          route: "/pages",
-          label: "Paginas",
-          icon: "fa-solid fa-file-lines",
-        },
-        {
-          id: 3,
-          route: "/Berichten",
-          label: "Berichten",
-          icon: "fa-solid fa-file-pen",
-        },
-      ],
+      menu: null,
     };
   },
   actions: {
-    getMenu() {
-        console.log('ddd');
+    async getMenu() {
+      this.loading = true;
+      this.loaded = false;
+      const menuResponse: any = await getMainMenuRequest();
+      this.menu = parseMenu(menuResponse);
+      console.log("this.menu", this.menu);
+
+      this.loading = false;
+      this.loaded = true;
     },
   },
   getters: {
+    isMenuLoading: (state: any) => {
+      return state.loading;
+    },
+    isMenuLoaded: (state: any) => {
+      return state.loaded;
+    },
   },
 });
+
+function parseMenu(menu) {
+  return menu.map((menuItem, index) => {
+    const menuData = menuItem.data;
+    const slug = menuData.label.toLowerCase();
+    const route = `/${slug}`;
+    return {
+      id: index,
+      slug,
+      route,
+      ...menuItem,
+      ...menuData,
+    };
+  });
+}

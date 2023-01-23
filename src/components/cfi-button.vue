@@ -67,7 +67,7 @@ const props = defineProps({
   },
   classes: {
     type: String,
-    default: "",
+    default: "bg-gray-100",
   },
 });
 

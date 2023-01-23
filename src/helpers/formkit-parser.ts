@@ -1,3 +1,5 @@
+import { FormKitSchema } from "@formkit/vue";
+
 const decorationValueKeys = {
   options: "options",
   prefix: "image_url",
@@ -55,14 +57,16 @@ const formkitNodeAliases = {
 };
 
 const formkitNodeTypes = {
-  $formkit: ["text", "select", "form", "group", "repeater", "url", "file"],
-  $cmp: "[image_url]",
-  $el: ["text", "select"],
+  $formkit: ["text", "select", "form", "group", "repeater", "url", "file", 'hippieInput'],
+  $cmp: "card",
+  $el: ["text", "select", 'h1'],
 };
 
 function registerFormKitType(nodeType, name) {
   formkitNodeTypes[nodeType] = [...formkitNodeTypes[nodeType], name];
 }
+
+registerFormKitType('$formkit', 'hippieInput');
 
 function getFormKitType(component) {
   const currentType = formkitNodeAliases[component.type] || component.type;
