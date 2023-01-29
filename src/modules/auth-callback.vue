@@ -33,12 +33,12 @@ export default {
 
                 const accessToken = response["auth"]["access_token"]
                 console.log(accessToken)
-                document.cookie = "access_token=" + accessToken;
+                // document.cookie = "access_token=" + accessToken;
 
                 // Get user profile
                 const url = 'http://localhost:3010/api/users/me';
                 Http.open("GET", url);
-                Http.setRequestHeader("Cookie", document.cookie)
+                Http.setRequestHeader("access_token", accessToken)
                 Http.send();
 
                 Http.onreadystatechange = (e) => {
