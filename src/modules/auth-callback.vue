@@ -38,7 +38,7 @@ export default {
                 // Get user profile
                 const url = 'http://localhost:3010/api/users/me';
                 Http.open("GET", url);
-                Http.setRequestHeader("access_token", accessToken)
+                Http.setRequestHeader("Authorization", "Bearer " + accessToken)
                 Http.send();
 
                 Http.onreadystatechange = (e) => {
