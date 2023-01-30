@@ -18,7 +18,6 @@ export default {
             const state = urlParams.get('state')
             console.log(state);
 
-
             // @todo, Use httpOnly cookie. The server can't set the cookie for now.
             const Http = new XMLHttpRequest();
             const url = 'http://localhost:3010/api/callback?code=' + code + "&state=" + state;
@@ -37,13 +36,14 @@ export default {
 
                 // Get user profile
                 const url = 'http://localhost:3010/api/users/me';
-                Http.open("GET", url);
-                Http.setRequestHeader("Authorization", "Bearer " + accessToken)
-                Http.send();
+                const Http2 = new XMLHttpRequest();
+                Http2.open("GET", url);
+                Http2.setRequestHeader("Authorization", "Bearer " + accessToken)
+                Http2.send();
 
-                Http.onreadystatechange = (e) => {
-                    console.log("status", Http.status)
-                    const response = JSON.parse(Http.responseText)
+                Http2.onreadystatechange = (e) => {
+                    console.log("status", Http2.status)
+                    const response = JSON.parse(Http2.responseText)
                     console.log("response", response)
                     alert(response["name"] + " from second request");
                 }
