@@ -16,6 +16,7 @@ const { menu } = storeToRefs(menuStore);
 setTimeout(() => {
   console.log("menu!!", menu.value);
 }, 2000);
+
 </script>
 
 <template>
@@ -66,8 +67,9 @@ setTimeout(() => {
             </cfi-button>
             <i class="fa-solid fa-file-pen"></i>
           </div>
-          <div class="rounded-full overflow-hidden bg-gray-100 w-[60px] flex">
-            <img src="https://via.placeholder.com/100x100" alt="" />
+          <a href="/login">Login</a>
+          <div class="rounded-full overflow-hidden bg-gray-100 w-[60px] flex cursor-pointer">
+            <img src="https://via.placeholder.com/100x100" alt=""/>
             <i class="fa-solid fa-file-pen"></i>
           </div>
         </div>

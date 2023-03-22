@@ -8,6 +8,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import "@formkit/themes/genesis";
 import "@formkit/pro/genesis";
 import Dashboard from "./modules/dashboard.vue";
+import Login from "./modules/login.vue";
+import AuthCallback from "./modules/auth-callback.vue";
 import NotFound from "./modules/not-found.vue";
 import Pages from "./modules/pages/pages-overview.vue";
 import PageEdit from "./modules/pages/page-edit.vue";
@@ -29,6 +31,16 @@ const routes = [
     path: "/",
     name: "Home",
     component: Dashboard,
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
+  },
+  {
+    path: "/auth/callback",
+    name: "AuthCallback",
+    component: AuthCallback,
   },
   {
     path: "/pages",
