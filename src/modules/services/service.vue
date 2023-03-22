@@ -2,11 +2,9 @@
 import { computed, watch, ref, watchEffect } from "vue";
 import { useRoute } from "vue-router";
 import cfiTable from "../../components/cfi-table.vue";
-import cfiCard from "../../components/cfi-card.vue";
 import cfiTabs from "../../components/cfi-tabs.vue";
 import cfiForm from "../../components/cfi-form.vue";
 import dCfiButton from "../../components/dynamics/d-cfi-button.vue";
-import pageTemplate from "../../components/structure/page-template.vue";
 import { usePagesStore } from "../../store/pages";
 import { storeToRefs } from "pinia";
 import { useMenuStore } from "../../store/menu";
