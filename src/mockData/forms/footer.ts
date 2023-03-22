@@ -1,4 +1,4 @@
-export const footerColumn1Form = [
+export const footerColumn1 = [
   {
     parent_key: "",
     key: "footer",
@@ -115,6 +115,55 @@ export const footerColumn1Form = [
       from: 11,
       to: 70,
     },
+  },
+  {
+    parent_key: "headerGroup",
+    key: "header",
+    type: "image",
+    decorations: [
+      {
+        type: "label",
+        value: "Icon",
+      },
+    ],
+    source: {
+      directory: "views",
+      file: "home.blade.php",
+      line: 8,
+      from: 19,
+      to: 65,
+    },
+  },
+  {
+    parent_key: "headerGroup",
+    key: "header.image",
+    type: "image",
+    decorations: [
+      {
+        type: "label",
+        value: "Icon",
+      },
+    ],
+    source: {
+      directory: "views",
+      file: "home.blade.php",
+      line: 8,
+      from: 19,
+      to: 65,
+    },
+  },
+];
+export const footerColumn2 = [
+  {
+    parent_key: "",
+    key: "footer",
+    type: "section",
+    decorations: [
+      {
+        type: "label",
+        value: "wat is jouw naam?",
+      },
+    ],
   },
   {
     parent_key: "headerGroup",

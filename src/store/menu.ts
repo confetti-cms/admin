@@ -15,8 +15,6 @@ export const useMenuStore = defineStore("menu", {
       this.loaded = false;
       const menuResponse: any = await getMainMenuRequest();
       this.menu = parseMenu(menuResponse);
-      console.log("this.menu", this.menu);
-
       this.loading = false;
       this.loaded = true;
     },
@@ -35,7 +33,8 @@ function parseMenu(menu) {
   return menu.map((menuItem, index) => {
     const menuData = menuItem.data;
     const slug = menuData.label.toLowerCase();
-    const route = `/${slug}`;
+    const route = menuItem.data.url;
+
     return {
       id: index,
       slug,

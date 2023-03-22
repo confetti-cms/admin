@@ -13,13 +13,11 @@ export const usePagesStore = defineStore("pages", {
     getPages() {
       this.loading = true;
       this.loaded = false;
-      getPagesRequest().then((res: any) => {
-        console.log("res", res);
-
-        this.pages = res;
-        this.loading = false;
-        this.loaded = true;
-      });
+      // getPagesRequest().then((res: any) => {
+      //   this.pages = res;
+      //   this.loading = false;
+      //   this.loaded = true;
+      // });
     },
   },
   getters: {

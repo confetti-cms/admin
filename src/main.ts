@@ -1,5 +1,5 @@
-import { createApp, watch } from "vue";
-import { createPinia, storeToRefs } from "pinia";
+import { createApp } from "vue";
+import { createPinia } from "pinia";
 import App from "./App.vue";
 import "./style.css";
 import { plugin, defaultConfig } from "@formkit/vue";
@@ -9,11 +9,8 @@ import "@formkit/themes/genesis";
 import "@formkit/pro/genesis";
 import Dashboard from "./modules/dashboard.vue";
 import NotFound from "./modules/not-found.vue";
-import Pages from "./modules/pages/pages-overview.vue";
-import PageEdit from "./modules/pages/page-edit.vue";
-import Services from "./modules/services/services-overview.vue";
-import ServicesEdit from "./modules/services/service-edit.vue";
-import Posts from "./modules/posts.vue";
+import Service from "./modules/services/service.vue";
+import ServiceDetail from "./modules/services/service-detail.vue";
 import { useMenuStore } from "./store/menu";
 import { createProPlugin, inputs } from "@formkit/pro";
 import { getMainMenuRequest } from "./mockData/requests";
@@ -31,58 +28,57 @@ const routes = [
     component: Dashboard,
   },
   {
-    path: "/pages",
-    name: "Pages",
-    component: Pages,
-  },
-  {
-    path: "/pages/edit/:id",
-    name: "PageEdit",
-    component: PageEdit,
-  },
-  {
-    path: "/posts",
-    name: "Posts",
-    component: Posts,
-  },
-  {
     path: "/404",
     name: "notFound",
     component: NotFound,
   },
+  // {
+  //   path: "/:service",
+  //   name: "service",
+  //   component: Services,
+  //   async beforeEnter(to, from, next) {
+  //     console.log("neee");
+  //     let store = useMenuStore();
+  //     next();
+  //     const { isMenuLoaded } = storeToRefs(store);
+  //     const service = to.params.service;
+  //     // const menuItems: any = await getMainMenuRequest();
+  //     // const hasService = !!menuItems.find((item) => item.module === service);
+  //     // if (hasService) {
+  //     //   next();
+  //     // } else {
+  //     //   next("/404");
+  //     // }
+
+  //     // store.getMenu();
+  //     // watch(isMenuLoaded, () => {
+  //     //   console.log("some changed", isMenuLoaded.value);
+  //     //   next();
+  //     // });
+  //     if (isMenuLoaded.value) {
+  //       next();
+  //     }
+  //   },
+  // },
+  // id: "/section/pages/page~665627a8-asds-fdsa-fewe-asdfdsfjhwef",
   {
-    path: "/:service",
+    path: "/section/:service",
     name: "service",
-    component: Services,
-    async beforeEnter(to, from, next) {
+    component: Service,
+    beforeEnter: (to, from, next) => {
       let store = useMenuStore();
       next();
-      const { isMenuLoaded } = storeToRefs(store);
-      console.log("isMenuLoaded", isMenuLoaded.value);
-
-      const service = to.params.service;
-      // const menuItems: any = await getMainMenuRequest();
-      // const hasService = !!menuItems.find((item) => item.module === service);
-      // if (hasService) {
-      //   next();
+      // if (!store.menu) {
+      //   return false;
       // } else {
-      //   next("/404");
-      // }
-
-      // store.getMenu();
-      // watch(isMenuLoaded, () => {
-      //   console.log("some changed", isMenuLoaded.value);
       //   next();
-      // });
-      if (isMenuLoaded.value) {
-        next();
-      }
+      // }
     },
   },
   {
-    path: "/:service/edit/:id",
-    name: "serviceEdit",
-    component: ServicesEdit,
+    path: "/section/:service/:id",
+    name: "service-detail",
+    component: ServiceDetail,
   },
 ];
 const router = createRouter({ history: createWebHistory(), routes });

@@ -57,16 +57,25 @@ const formkitNodeAliases = {
 };
 
 const formkitNodeTypes = {
-  $formkit: ["text", "select", "form", "group", "repeater", "url", "file", 'hippieInput'],
+  $formkit: [
+    "text",
+    "select",
+    "form",
+    "group",
+    "repeater",
+    "url",
+    "file",
+    "hippieInput",
+  ],
   $cmp: "card",
-  $el: ["text", "select", 'h1'],
+  $el: ["text", "select", "h1"],
 };
 
 function registerFormKitType(nodeType, name) {
   formkitNodeTypes[nodeType] = [...formkitNodeTypes[nodeType], name];
 }
 
-registerFormKitType('$formkit', 'hippieInput');
+registerFormKitType("$formkit", "hippieInput");
 
 function getFormKitType(component) {
   const currentType = formkitNodeAliases[component.type] || component.type;
@@ -114,7 +123,6 @@ function parseToFormKitSchema(component) {
 
   if (nodeModifiers[type]) {
     schema = nodeModifiers[type](component, schema);
-    console.log("schema", schema);
   }
 
   return schema;
@@ -126,7 +134,6 @@ export function parseComponentsToFormKitSchema(data) {
 
 export function parseFormKitGroepSchema(data) {
   let parent = data.find((e) => !e["parent_key"]);
-
   function getChildren(parent) {
     const children = data.filter((entry) => {
       return entry.parent_key === parent.key;

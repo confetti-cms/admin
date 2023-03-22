@@ -1,82 +1,375 @@
-export const pages = [
+export const pagesData = [
   {
-    id: 1,
-    title: "Home pagina",
-    date: new Date(),
-    categories: "cat1, cat2",
-    status: "gepubliceerd",
-    formSchema: [
+    id: "/section/pages/page~665627a8-10bd-4fce-be1c-13dc2dc671fd",
+    component_id: "/section/pages/page~",
+    data: {
+      title: "Home page",
+      slug: "a-long-title-that-serves-as-slug",
+      status: "published",
+    },
+  },
+  {
+    id: "/section/pages/page~665627a8-asds-fdsa-fewe-asdfdsfjhwef",
+    component_id: "/section/pages/page~",
+    data: {
+      title: "Contact page",
+      slug: "contact",
+      status: "published",
+    },
+  },
+  {
+    id: "/section/pages/page~1234567890",
+    component_id: "/section/pages/page~",
+    data: {
+      title: "Oude formulier data structuur",
+      slug: "old-form-page",
+      status: "published",
+    },
+  },
+];
+
+export const pagesStructure = [
+  {
+    parent_key: "/section",
+    key: "/section/pages",
+    type: "section",
+    decorations: [
       {
-        $el: "h1",
-        children: "Register",
+        type: "menu_left",
+        component_key: "/section/pages",
+        data: {
+          method: "direct",
+          label: "Pages",
+          url: "/section/pages",
+        },
       },
       {
-        $formkit: "text",
-        name: "email",
-        label: "Email",
-        help: "This will be used for your account.",
-        validation: "required|email",
+        type: "label",
+        data: {
+          value: "Pages",
+        },
+      },
+    ],
+    source: {
+      directory: "",
+      file: "index.blade.php",
+      line: 2,
+      from: 0,
+      to: 0,
+    },
+  },
+  {
+    parent_key: "/section/pages",
+    key: "/section/pages/add_page",
+    type: "button",
+    decorations: [
+      {
+        type: "label",
+        component_key: "/section/pages/add_page",
+        data: {
+          value: "Add pages",
+        },
+      },
+      {
+        type: "url",
+        data: {
+          target: "self",
+          value: "/section/pages/page~",
+        },
+      },
+    ],
+    source: {
+      directory: "",
+      file: "index.blade.php",
+      line: 2,
+      from: 0,
+      to: 0,
+    },
+  },
+  {
+    parent_key: "/section/pages",
+    key: "/section/pages/page~",
+    type: "list",
+    decorations: [
+      {
+        type: "columns",
+        component_key: "/section/pages/page~",
+        data: {
+          columns: [
+            {
+              label: "Title",
+              key: "title",
+            },
+            {
+              label: "Status",
+              key: "status",
+            },
+            {
+              label: "Slug",
+              key: "slug",
+            },
+          ],
+          actions: [
+            {
+              type: "delete",
+              target: "remove",
+              url: "/section/pages/page~",
+            },
+            {
+              type: "edit",
+              target: "self",
+              url: "/section/pages/page~",
+            },
+          ],
+        },
+      },
+    ],
+    source: {
+      directory: "",
+      file: "index.blade.php",
+      line: 2,
+      from: 0,
+      to: 0,
+    },
+  },
+  {
+    parent_key: "/section/pages/page~",
+    key: "/section/pages/page~/description",
+    component_key: "/section/pages/page~/description",
+    type: "text",
+    decorations: [
+      {
+        type: "label",
+        data: {
+          value: "Description",
+        },
+      },
+    ],
+    source: {
+      directory: "/views/templates",
+      file: "home.blade.php",
+      line: 1,
+      from: 1,
+      to: 34,
+    },
+  },
+];
+
+export const mockPage = [
+  {
+    parent_key: "",
+    key: "/section/intro/title",
+    type: "text",
+    decorations: [
+      {
+        type: "label",
+        data: {
+          value: "Title of the intro",
+        },
+      },
+      {
+        type: "placeholder",
+        data: {
+          value: "Design your website",
+        },
+      },
+      {
+        type: "default",
+        data: {
+          value: "Home",
+        },
+      },
+      {
+        type: "help",
+        data: {
+          value: "Type here the title intro title",
+        },
+      },
+      {
+        type: "required",
+        data: {
+          value: true,
+        },
+      },
+      {
+        type: "minlength",
+        data: {
+          value: 10,
+        },
+      },
+      {
+        type: "maxlength",
+        data: {
+          value: 100,
+        },
+      },
+      {
+        type: "prefix",
+        image_url: "/object/icons/h1.svg",
+      },
+    ],
+    source: {
+      directory: "views",
+      file: "home.blade.php",
+      line: 43,
+      from: 27,
+      to: 34,
+    },
+  },
+];
+
+export const oldMockform = [
+  {
+    parent_key: "",
+    key: "footer",
+    type: "section",
+    decorations: [
+      {
+        type: "label",
+        value: "wat is jouw naam?",
       },
     ],
   },
   {
-    id: 2,
-    title: "Tekst pagina",
-    date: new Date(),
-    categories: "cat1, cat2",
-    status: "gepubliceerd",
-    formSchema: [
-      {
-        $el: "h1",
-        children: "Register",
-      },
-      {
-        $formkit: "text",
-        name: "email",
-        label: "Email",
-        help: "This will be used for your account.",
-        validation: "required|email",
-      },
-    ],
+    parent_key: "footer",
+    key: "footerGroup",
+    type: "group",
+    decorations: [],
+    source: {
+      directory: "views",
+      file: "home.blade.php",
+      line: 6,
+      from: 11,
+      to: 70,
+    },
   },
   {
-    id: 4,
-    title: "Blog pagina",
-    date: new Date(),
-    categories: "cat1, cat2",
-    status: "gepubliceerd",
-    formSchema: [
+    parent_key: "footerGroup",
+    key: "footer.socials",
+    type: "repeater",
+    decorations: [
       {
-        $el: "h1",
-        children: "Register",
+        type: "label",
+        value: "Socials",
       },
       {
-        $formkit: "text",
-        name: "email",
-        label: "Email",
-        help: "This will be used for your account.",
-        validation: "required|email",
+        type: "min",
+        value: "2",
+      },
+      {
+        type: "max",
+        value: "7",
       },
     ],
+    source: {
+      directory: "views",
+      file: "home.blade.php",
+      line: 6,
+      from: 11,
+      to: 70,
+    },
   },
   {
-    id: 3,
-    title: "Contact pagina",
-    date: new Date(),
-    categories: "cat1, cat2",
-    status: "gepubliceerd",
-    formSchema: [
+    parent_key: "footer.socials",
+    key: "footer.socials.url",
+    type: "url",
+    decorations: [
       {
-        $el: "h1",
-        children: "Register",
-      },
-      {
-        $formkit: "text",
-        name: "email",
-        label: "Email",
-        help: "This will be used for your account.",
-        validation: "required|email",
+        type: "label",
+        value: "Url",
       },
     ],
+    source: {
+      directory: "views",
+      file: "home.blade.php",
+      line: 7,
+      from: 15,
+      to: 55,
+    },
+  },
+  {
+    parent_key: "footer.socials",
+    key: "footer.socials.icon",
+    type: "image",
+    decorations: [
+      {
+        type: "label",
+        value: "Icon",
+      },
+    ],
+    source: {
+      directory: "views",
+      file: "home.blade.php",
+      line: 8,
+      from: 19,
+      to: 65,
+    },
+  },
+  {
+    parent_key: "footerGroup",
+    key: "footer.socials",
+    type: "image",
+    decorations: [
+      {
+        type: "label",
+        value: "Icon",
+      },
+    ],
+    source: {
+      directory: "views",
+      file: "home.blade.php",
+      line: 8,
+      from: 19,
+      to: 65,
+    },
+  },
+  {
+    parent_key: "footer",
+    key: "headerGroup",
+    type: "group",
+    decorations: [],
+    source: {
+      directory: "views",
+      file: "home.blade.php",
+      line: 6,
+      from: 11,
+      to: 70,
+    },
+  },
+  {
+    parent_key: "headerGroup",
+    key: "header",
+    type: "image",
+    decorations: [
+      {
+        type: "label",
+        value: "Icon",
+      },
+    ],
+    source: {
+      directory: "views",
+      file: "home.blade.php",
+      line: 8,
+      from: 19,
+      to: 65,
+    },
+  },
+  {
+    parent_key: "headerGroup",
+    key: "header.image",
+    type: "image",
+    decorations: [
+      {
+        type: "label",
+        value: "Icon",
+      },
+    ],
+    source: {
+      directory: "views",
+      file: "home.blade.php",
+      line: 8,
+      from: 19,
+      to: 65,
+    },
   },
 ];

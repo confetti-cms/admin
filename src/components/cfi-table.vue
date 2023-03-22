@@ -1,17 +1,37 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
-const prop = defineProps({
+const props = defineProps({
   headers: {
     type: Array,
+    default: [],
+  },
+  actions: {
+    type: Array,
+    default: [],
   },
   data: {
     type: Array,
   },
+  expandRow: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+const tableCcolumns = computed(() => {
+  const columns = [...props.headers];
+  if (props.actions.length) {
+    columns.push({ label: "Acties", key: "actions" });
+  }
+  return columns;
 });
 
 const currentOpenRow = ref(null);
 const openRow = (index) => {
+  if (!props.expandRow) {
+    return;
+  }
   currentOpenRow.value = index;
   // currentOpenRow.value = currentOpenRow.value === index ? null : index;
 };
@@ -21,10 +41,10 @@ const openRow = (index) => {
     <div class="table__row border-gray-200 border-b table__head">
       <div
         class="table__row__inner"
-        :style="{ gridTemplateColumns: `repeat(${headers.length}, 1fr)` }"
+        :style="{ gridTemplateColumns: `repeat(${tableCcolumns.length}, 1fr)` }"
       >
-        <div class="table__column px-4 py-2" v-for="header of headers">
-          {{ header.name }}
+        <div class="table__column px-4 py-2" v-for="header of tableCcolumns">
+          {{ header.label }}
         </div>
       </div>
     </div>
@@ -37,12 +57,15 @@ const openRow = (index) => {
     >
       <div
         class="table__row__inner"
-        :style="{ gridTemplateColumns: `repeat(${headers.length}, 1fr)` }"
+        :style="{ gridTemplateColumns: `repeat(${tableCcolumns.length}, 1fr)` }"
       >
         <div class="table__column px-4 py-2" v-for="header of headers">
-          <slot :name="header.key.replace(' ', '-').toLowerCase()" :value="row">
-            {{ row[header.key] }}
+          <slot :name="header.key" :row="row">
+            {{ row.data[header.key] }}
           </slot>
+        </div>
+        <div class="table__column px-4 py-2">
+          <slot name="actions" :row="row"> acties123 </slot>
         </div>
       </div>
       <div
