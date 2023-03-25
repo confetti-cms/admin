@@ -10,6 +10,10 @@ const prop = defineProps({
     type: String,
   },
 });
+const emit = defineEmits(["close"]);
+const close = () => {
+  emit("close");
+};
 </script>
 
 <template>

@@ -69,6 +69,10 @@ const props = defineProps({
     type: String,
     default: "bg-gray-100",
   },
+  label: {
+    type: String,
+    default: "",
+  },
 });
 
 const classes = computed(() => {
@@ -92,7 +96,9 @@ const classes = computed(() => {
           <i :class="icon" class="cfi-button__icon"></i>
         </slot>
       </template>
-      <slot></slot>
+      <slot>
+        {{ label }}
+      </slot>
     </div>
   </button>
   <a v-else class="cfi-button" :class="classes">
@@ -127,7 +133,7 @@ const classes = computed(() => {
 
   &--primary {
     background: var(--color-primary);
-    color: white;
+    // color: white;
   }
 
   &--anchor {

@@ -18,6 +18,9 @@ export const serviceStructure = {
 // data of service overview
 export const serviceData = {
   "/section/page": pagesData,
+  "/section/banner/banner~dsdsds": bannerData,
+  "/section/footer/footer~dsdsds": footerData,
+  "/section/pages/page~": pagesData,
   "/section/banner": bannerData,
   "/section/footer": footerData,
 };
@@ -40,10 +43,7 @@ export const getServiceData = (serviceId) => {
 };
 
 export const getService = (service) => {
-  return mockRequest(
-    Promise.all([getServiceStructure(service)(), getServiceData(service)()]),
-    200
-  );
+  return mockRequest(Promise.all([getServiceStructure(service)()]), 200);
 };
 
 export const getServiceDetailData = (service) => {

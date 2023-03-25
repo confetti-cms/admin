@@ -1,74 +1,57 @@
 <script setup lang="ts">
-import { computed, watch, ref, watchEffect } from "vue";
+import { ref, watchEffect } from "vue";
 import { useRoute } from "vue-router";
-import cfiTable from "../../components/cfi-table.vue";
-import cfiTabs from "../../components/cfi-tabs.vue";
-import cfiForm from "../../components/cfi-form.vue";
-import dCfiButton from "../../components/dynamics/d-cfi-button.vue";
-import { usePagesStore } from "../../store/pages";
+import CfiCmsTable from "../../components/cms/cfi-cms-table.vue";
+import CfiCmsTabs from "../../components/cms/cfi-cms-tabs.vue";
+import CfiButton from "../../components/ui/cfi-button.vue";
 import { storeToRefs } from "pinia";
 import { useMenuStore } from "../../store/menu";
-import { getServiceContent, getService } from "../../mockData/requests";
-const { pages, isPagesLoading } = storeToRefs(usePagesStore());
+import { getServiceData, getService } from "../../mockData/requests";
+import { ServiceComponents } from "./service-components";
+
 const route = useRoute();
 const menuStore = useMenuStore();
 const { menu } = storeToRefs(menuStore);
 
 const servicePageStructure = ref(null);
-const serviceData = ref(null);
 
-const decorationFunctions = {
-  button: (decorations) => {
-    return decorations.reduce((list, decoration) => {
-      const { type, data } = decoration;
-      return {
-        ...list,
-        [type]: data.value,
-      };
-    }, {});
-  },
-  list: (decorations) => {
-    return decorations.reduce((list, decoration) => {
-      const { type, data } = decoration;
-      const headers = data.columns;
-      return {
-        ...list,
-        headers,
-        actions: data.actions,
-      };
-    }, {});
-  },
-  tabs: (decorations) => {
-    return decorations.reduce((list, decoration) => {
-      const { type, data } = decoration;
-      const headers = data.columns;
-      return {
-        ...list,
-        headers,
-      };
-    }, {});
-  },
+type ComponentDataType = {
+  type: string;
+  key: string;
+  props: Object;
+  data: null | Object;
+  component: any;
 };
 
 watchEffect(() => {
   const serviceId = route.path;
-  getService(serviceId)().then((service: any) => {
-    const [structure, data] = service;
-    console.log("service data", data);
-    const parsed: any = structure.reduce((list, s: any) => {
-      if (decorationFunctions[s.type]) {
-        const parsed = decorationFunctions[s.type](s.decorations);
-        list.push({
-          type: s.type,
-          key: s.key,
+  getService(serviceId)().then(async (service: any) => {
+    const [structure] = service;
+    const parsed = await structure.reduce(async (promise, component: any) => {
+      const list = await promise;
+      if (ServiceComponents[component.type]) {
+        const parsed = ServiceComponents[component.type].parse(
+          component.decorations
+        );
+
+        const componentData: ComponentDataType = {
+          type: component.type,
+          key: component.key,
+          component: ServiceComponents[component.type].component,
           props: parsed,
-        });
+          data: null,
+        };
+
+        if (ServiceComponents[component.type].fetchData) {
+          const resp: any = await getServiceData(component.key)();
+          componentData.data = resp;
+        }
+        list.push(componentData);
       }
       return list;
-    }, []);
-    serviceData.value = data;
-    servicePageStructure.value = parsed;
+    }, Promise.resolve([]));
     console.log("parsed", parsed);
+    servicePageStructure.value = parsed;
   });
 });
 </script>
@@ -77,15 +60,11 @@ watchEffect(() => {
   <div v-if="servicePageStructure">
     <div v-for="structure in servicePageStructure">
       <div v-if="structure.type === 'button'">
-        <d-cfi-button v-bind="structure.props"></d-cfi-button>
+        <cfi-button v-bind="structure.props"></cfi-button>
       </div>
 
       <div v-else-if="structure.type === 'list'">
-        <cfi-table
-          :headers="structure.props.headers"
-          :actions="structure.props.actions"
-          :data="serviceData"
-        >
+        <cfi-cms-table :structure="structure">
           <template #title="{ row }">
             <router-link
               :to="row.id"
@@ -94,21 +73,15 @@ watchEffect(() => {
               {{ row.data.title }}
             </router-link>
           </template>
+
+          <template #collapedContent> acties </template>
+
           <template #actions="{ row }"> acties hier</template>
-        </cfi-table>
+        </cfi-cms-table>
       </div>
 
       <div v-else-if="structure.type === 'tabs'">
-        <cfi-tabs :tabs="structure.props.headers" :data="serviceData">
-          <template
-            v-for="(slot, index) of structure.props.headers"
-            :key="index"
-            v-slot:[slot.key]="{ tab }"
-          >
-            <cfi-form :formData="tab"></cfi-form>
-            <!-- {{ tab }} -->
-          </template>
-        </cfi-tabs>
+        <cfi-cms-tabs :structure="structure"></cfi-cms-tabs>
       </div>
     </div>
   </div>

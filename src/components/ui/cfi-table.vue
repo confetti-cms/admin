@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
+import { debounce } from "../../helpers/debounce";
 
 const props = defineProps({
   headers: {
@@ -13,11 +14,17 @@ const props = defineProps({
   data: {
     type: Array,
   },
+  multiSelect: {
+    type: Boolean,
+    default: false,
+  },
   expandRow: {
     type: Boolean,
     default: false,
   },
 });
+
+const emit = defineEmits(["selectRow"]);
 
 const tableCcolumns = computed(() => {
   const columns = [...props.headers];
@@ -35,10 +42,48 @@ const openRow = (index) => {
   currentOpenRow.value = index;
   // currentOpenRow.value = currentOpenRow.value === index ? null : index;
 };
+const selectedRows = ref({});
+const allRowsSelected = ref(false);
+
+const update = (isChecked, row) => {
+  if (isChecked) {
+    selectedRows.value[row.id] = row;
+  } else {
+    const { [row.id]: id, ...rest } = selectedRows.value;
+    selectedRows.value = rest;
+  }
+  const selectedRowsArray = Object.keys(selectedRows.value).map(
+    (key) => selectedRows.value[key]
+  );
+  emit("selectRow", selectedRowsArray);
+};
+
+const selectAllRows = () => {
+  allRowsSelected.value = !allRowsSelected.value;
+  if (allRowsSelected.value) {
+    selectedRows.value = props.data.reduce((list, item) => {
+      return {
+        ...list,
+        [item.id]: item,
+      };
+    }, {});
+  } else {
+    selectedRows.value = {};
+  }
+};
 </script>
 <template>
   <div class="table text-slate-500 w-full">
-    <div class="table__row border-gray-200 border-b table__head">
+    <div
+      class="table__row border-gray-200 border-b table__head"
+      :class="{ ['has-multi-select']: multiSelect }"
+    >
+      <FormKit
+        v-if="multiSelect"
+        type="checkbox"
+        :model-value="false"
+        @update:model-value="selectAllRows()"
+      />
       <div
         class="table__row__inner"
         :style="{ gridTemplateColumns: `repeat(${tableCcolumns.length}, 1fr)` }"
@@ -48,13 +93,22 @@ const openRow = (index) => {
         </div>
       </div>
     </div>
+
     <div
       v-auto-animate
       class="table__row border-b border-gray-200"
+      :class="{ ['has-multi-select']: multiSelect }"
       v-for="(row, index) in data"
       :key="`table-row-${index}`"
       @click="openRow(index)"
     >
+      <FormKit
+        v-if="multiSelect"
+        type="checkbox"
+        :model-value="!!selectedRows[row.id]"
+        @update:model-value="update($event, row)"
+        :value="false"
+      />
       <div
         class="table__row__inner"
         :style="{ gridTemplateColumns: `repeat(${tableCcolumns.length}, 1fr)` }"
@@ -78,49 +132,23 @@ const openRow = (index) => {
       </div>
     </div>
   </div>
-
-  <!-- <table
-    class="items-center w-full mb-0 align-top border-gray-200 text-slate-500"
-  >
-    <tr>
-      <td>
-        <tr>
-          <td
-            class="px-5 py-4 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent"
-            v-for="header in headers"
-          >
-            {{ header.name }}
-          </td>
-        </tr>
-      </td>
-    </tr>
-    <tr v-for="(row, index) in data" class="border-b">
-      <td>
-        <tr @click="openRow = index">
-          <td
-            class="px-5 py-4 align-middle bg-transparent whitespace-nowrap shadow-transparent"
-            v-for="header in headers"
-          >
-            <slot
-              :name="header.key.replace(' ', '-').toLowerCase()"
-              :value="row"
-            >
-              {{ row[header.key] }}
-            </slot>
-          </td>
-        </tr>
-        <tr v-if="openRow === index" useAutoAnimate>
-          <td>hallooooo</td>
-        </tr>
-      </td>
-    </tr>
-  </table> -->
 </template>
 
 <style lang="scss">
 .table {
   &__row {
     padding: 5px 0;
+
+    &.has-multi-select {
+      display: flex;
+      align-items: center;
+      --fk-margin-outer: 0;
+
+      .table__row__inner {
+        flex-grow: 1;
+      }
+    }
+
     &__inner {
       display: grid;
       gap: 16px;

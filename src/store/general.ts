@@ -23,6 +23,9 @@ export const useGeneralStore = defineStore("general", {
     showModal(payload) {
       this.activeModal = payload;
     },
+    hideModal() {
+      this.activeModal = null;
+    },
   },
   getters: {
     isMenuLoading: (state: any) => {

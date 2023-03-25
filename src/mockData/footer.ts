@@ -31,7 +31,7 @@ export const footerStructureData = [
   },
   {
     parent_key: "footer",
-    key: "footer.tabs",
+    key: "/section/footer/footer~dsdsds",
     type: "tabs",
     decorations: [
       {

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import cfiModal from "./components/cfi-modal.vue";
+import cfiModal from "./components/ui/cfi-modal.vue";
+import CfiButton from "./components/ui/cfi-button.vue";
 import { useGeneralStore } from "./store/general";
 import { useMenuStore } from "./store/menu";
 import { storeToRefs } from "pinia";
@@ -55,9 +56,9 @@ const { appLoaded } = storeToRefs(generalStore);
           />
           <div class="flex items-center">
             <div class="icons mx-4">
-              <cfi-button icon="fa-solid fa-file-lines">
+              <!-- <cfi-button icon="fa-solid fa-file-lines">
                 <i class="fa-solid fa-file-lines"></i>
-              </cfi-button>
+              </cfi-button> -->
               <i class="fa-solid fa-file-pen"></i>
             </div>
             <div class="rounded-full overflow-hidden bg-gray-100 w-[60px] flex">
@@ -67,7 +68,21 @@ const { appLoaded } = storeToRefs(generalStore);
           </div>
         </div>
         <router-view></router-view>
-        <cfi-modal v-if="activeModal" :title="activeModal.title"> </cfi-modal>
+        <cfi-modal
+          v-if="activeModal"
+          :title="activeModal.title"
+          @close="activeModal.onClose"
+        >
+          <template #default v-if="activeModal.description">
+            {{ activeModal.description }}
+          </template>
+          <template #footer>
+            <cfi-button @click="activeModal.onCancel" type="primary"
+              >Cancel</cfi-button
+            >
+            <cfi-button @click="activeModal.onConfirm">Confirm</cfi-button>
+          </template>
+        </cfi-modal>
       </section>
     </div>
     <div v-else>Loading app</div>
@@ -75,9 +90,6 @@ const { appLoaded } = storeToRefs(generalStore);
 </template>
 
 <style lang="scss">
-.no-margin {
-  margin: 0 !important;
-}
 .router-link-active {
   // @apply bg-white drop-shadow-md font-semibold;
 }
@@ -104,7 +116,8 @@ const { appLoaded } = storeToRefs(generalStore);
 
 .menu-item {
   transition: all 0.4s ease;
-  &:hover {
+  &:hover,
+  &.router-link-active {
     box-shadow: 4px 4px 13px -5px rgb(0 0 0 / 25%);
     background: white;
   }

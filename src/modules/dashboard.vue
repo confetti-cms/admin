@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import cfiCard from "../components/cfi-card.vue";
-import cfiButton from "../components/cfi-button.vue";
+import cfiCard from "../components/ui/cfi-card.vue";
+import CfiButton from "../components/ui/cfi-button.vue";
 import pageTemplate from "../components/structure/page-template.vue";
 </script>
 

@@ -63,7 +63,7 @@ export const bannerStructureData = [
   },
   {
     parent_key: "banner",
-    key: "banner.list",
+    key: "/section/banner/banner~dsdsds",
     type: "list",
     decorations: [
       {
