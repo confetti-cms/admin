@@ -1,4 +1,4 @@
-import { footerColumn1, footerColumn2 } from "./forms/footer";
+import { footerColumn1, footerColumn2, footerColumn3 } from "./forms/footer";
 
 export const footerStructureData = [
   {
@@ -69,7 +69,7 @@ export const footerData = {
   component_key: "/section/footer/footer~",
   data: {
     column1: footerColumn1,
-    column2: footerColumn2,
-    column3: footerColumn1,
+    // column2: footerColumn2,
+    // column3: footerColumn3,
   },
 };

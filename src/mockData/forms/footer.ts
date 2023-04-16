@@ -1,12 +1,41 @@
+const myfn = () => {
+  console.log("dssdsddsdsdssd");
+};
+
 export const footerColumn1 = [
   {
-    parent_key: "",
+    parent_key: "/section",
     key: "footer",
     type: "section",
     decorations: [
       {
         type: "label",
-        value: "wat is jouw naam?",
+        data: {
+          value: "wat is jouw naam?",
+        },
+      },
+      {
+        type: "submit-label",
+        data: {
+          value: "wat is jouw naam?",
+        },
+      },
+      {
+        type: "actions",
+        data: {
+          value: true,
+        },
+      },
+      {
+        type: "event",
+        spread: true,
+        data: {
+          value: {
+            name: "onSubmit",
+            method: "async",
+            endpoint: "some-endpoint",
+          },
+        },
       },
     ],
   },
@@ -30,15 +59,21 @@ export const footerColumn1 = [
     decorations: [
       {
         type: "label",
-        value: "Socials",
+        data: {
+          value: "Socials",
+        },
       },
       {
         type: "min",
-        value: "2",
+        data: {
+          value: "2",
+        },
       },
       {
         type: "max",
-        value: "7",
+        data: {
+          value: "7",
+        },
       },
     ],
     source: {
@@ -56,7 +91,9 @@ export const footerColumn1 = [
     decorations: [
       {
         type: "label",
-        value: "Url",
+        data: {
+          value: "Url",
+        },
       },
     ],
     source: {
@@ -74,7 +111,9 @@ export const footerColumn1 = [
     decorations: [
       {
         type: "label",
-        value: "Icon",
+        data: {
+          value: "Icon",
+        },
       },
     ],
     source: {
@@ -92,7 +131,9 @@ export const footerColumn1 = [
     decorations: [
       {
         type: "label",
-        value: "Icon",
+        data: {
+          value: "icon",
+        },
       },
     ],
     source: {
@@ -123,7 +164,9 @@ export const footerColumn1 = [
     decorations: [
       {
         type: "label",
-        value: "Icon",
+        data: {
+          value: "Icon",
+        },
       },
     ],
     source: {
@@ -141,7 +184,9 @@ export const footerColumn1 = [
     decorations: [
       {
         type: "label",
-        value: "Icon",
+        data: {
+          value: "hooooi",
+        },
       },
     ],
     source: {
@@ -155,50 +200,129 @@ export const footerColumn1 = [
 ];
 export const footerColumn2 = [
   {
-    parent_key: "",
-    key: "footer",
-    type: "section",
+    parent_key: "/section",
+    key: "/section/page1",
+    type: "text",
     decorations: [
       {
         type: "label",
-        value: "wat is jouw naam?",
+        data: {
+          value: "Title of the intro",
+        },
       },
-    ],
-  },
-  {
-    parent_key: "headerGroup",
-    key: "header",
-    type: "image",
-    decorations: [
       {
-        type: "label",
-        value: "Icon",
+        type: "placeholder",
+        data: {
+          value: "Design your website",
+        },
+      },
+      {
+        type: "default",
+        data: {
+          value: "Home",
+        },
+      },
+      {
+        type: "help",
+        data: {
+          value: "Type here the title intro title",
+        },
+      },
+      {
+        type: "required",
+        data: {
+          value: true,
+        },
+      },
+      {
+        type: "minlength",
+        data: {
+          value: 10,
+        },
+      },
+      {
+        type: "maxlength",
+        data: {
+          value: 100,
+        },
+      },
+      {
+        type: "prefix",
+        data: {
+          value: ":/object/icons/h1.svg:",
+        },
       },
     ],
     source: {
       directory: "views",
       file: "home.blade.php",
-      line: 8,
-      from: 19,
-      to: 65,
+      line: 43,
+      from: 27,
+      to: 34,
     },
   },
+];
+export const footerColumn3 = [
   {
-    parent_key: "headerGroup",
-    key: "header.image",
-    type: "image",
+    parent_key: "/section",
+    key: "/section/page1",
+    type: "text",
     decorations: [
       {
         type: "label",
-        value: "Icon",
+        data: {
+          value: "Een ander invulveld",
+        },
+      },
+      {
+        type: "placeholder",
+        data: {
+          value: "Design your website",
+        },
+      },
+      {
+        type: "default",
+        data: {
+          value: "Home",
+        },
+      },
+      {
+        type: "help",
+        data: {
+          value: "Type here the title intro title",
+        },
+      },
+      {
+        type: "required",
+        data: {
+          value: true,
+        },
+      },
+      {
+        type: "minlength",
+        data: {
+          value: 10,
+        },
+      },
+      {
+        type: "maxlength",
+        data: {
+          value: 100,
+        },
+      },
+      {
+        type: "prefix",
+        data: {
+          value: ":/object/icons/h1.svg:",
+        },
       },
     ],
     source: {
       directory: "views",
       file: "home.blade.php",
-      line: 8,
-      from: 19,
-      to: 65,
+      line: 43,
+      from: 27,
+      to: 34,
     },
   },
 ];

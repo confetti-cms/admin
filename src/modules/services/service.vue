@@ -64,20 +64,7 @@ watchEffect(() => {
       </div>
 
       <div v-else-if="structure.type === 'list'">
-        <cfi-cms-table :structure="structure">
-          <template #title="{ row }">
-            <router-link
-              :to="row.id"
-              class="rounded-md inline-block hover:text-gray-400"
-            >
-              {{ row.data.title }}
-            </router-link>
-          </template>
-
-          <template #collapedContent> acties </template>
-
-          <template #actions="{ row }"> acties hier</template>
-        </cfi-cms-table>
+        <cfi-cms-table :structure="structure"></cfi-cms-table>
       </div>
 
       <div v-else-if="structure.type === 'tabs'">

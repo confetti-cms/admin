@@ -25,14 +25,19 @@ getServiceDetailData(serviceId)().then((data) => {
   formKitSchema.value = parseFormKitGroepSchema(data);
   console.log("formKitSchema", formKitSchema.value);
 });
+
+const data = ref({
+  brood: "dsdsdsdssds",
+});
 </script>
 
 <template>
   <div>
     <pageTemplate>
       <div v-if="formKitSchema">
-        {{ formKitSchema }}
-        <FormKitSchema :schema="formKitSchema" />
+        <FormKit type="form" :value="data">
+          <FormKitSchema :data="data" :schema="formKitSchema" />
+        </FormKit>
       </div>
     </pageTemplate>
   </div>

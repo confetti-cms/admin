@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import CfiButton from "./cfi-button.vue";
 const prop = defineProps({
   title: {
     type: String,
@@ -19,11 +20,20 @@ const close = () => {
 <template>
   <div class="confetti-modal fixed">
     <div class="confetti-modal__inner">
-      <div class="confetti-modal__header flex items-center justify-center">
+      <div
+        class="confetti-modal__header flex items-center justify-center relative"
+      >
         <slot name="title">
           {{ title }}
         </slot>
-        <div @click="close()">close</div>
+        <cfi-button
+          @click="close()"
+          type="clear"
+          round-button
+          class="absolute w-[35px] h-[35px] right-[10px] padding-[5px] top-[5px]"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </cfi-button>
       </div>
       <div class="confetti-modal__body px-4 pb-4">
         <slot></slot>
@@ -53,7 +63,7 @@ const close = () => {
     height: 500px;
     border-radius: 6px;
     display: grid;
-    grid-template-rows: 50px 1fr 50px;
+    grid-template-rows: 50px 1fr auto;
   }
 
   &__header {
@@ -65,7 +75,6 @@ const close = () => {
   }
 
   &__footer {
-    height: 50px;
     border-top: 1px solid #efefef;
   }
 }

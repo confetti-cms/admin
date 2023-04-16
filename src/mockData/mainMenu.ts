@@ -1,11 +1,11 @@
 export const mainMenu = [
   {
     type: "menu_left",
-    component_key: "/section/page",
+    component_key: "/section/pages",
     data: {
       target: "self",
       label: "Pages",
-      url: "/section/page",
+      url: "/section/pages",
       icon: "fa-solid fa-file-pen",
     },
   },
@@ -17,6 +17,18 @@ export const mainMenu = [
       label: "Banner",
       url: "/section/banner",
       icon: "fa-solid fa-file-pen",
+      children: [
+        {
+          label: "first item",
+          url: "/section/footer",
+          icon: "fa-solid fa-file-pen",
+        },
+        {
+          label: "second item",
+          url: "/section/footer",
+          icon: "fa-solid fa-file-pen",
+        },
+      ],
     },
   },
   {

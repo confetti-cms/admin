@@ -16,6 +16,8 @@ const props = defineProps({
 const parsedFormSchema = computed(() => {
   if (props.formData) {
     console.log("props.formData", props.formData);
+    console.log("eens zien", JSON.parse(JSON.stringify(props.formData)));
+
     return parseFormKitGroepSchema(JSON.parse(JSON.stringify(props.formData)));
   } else return null;
 });

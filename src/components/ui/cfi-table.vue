@@ -113,7 +113,10 @@ const selectAllRows = () => {
         class="table__row__inner"
         :style="{ gridTemplateColumns: `repeat(${tableCcolumns.length}, 1fr)` }"
       >
-        <div class="table__column px-4 py-2" v-for="header of headers">
+        <div
+          class="table__column px-4 py-2 flex items-center"
+          v-for="header of headers"
+        >
           <slot :name="header.key" :row="row">
             {{ row.data[header.key] }}
           </slot>

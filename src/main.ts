@@ -80,6 +80,11 @@ const routes = [
     name: "service-detail",
     component: ServiceDetail,
   },
+  // {
+  //   path: "/section/:pathMatch(.*)*",
+  //   name: "service",
+  //   component: Service,
+  // },
 ];
 const router = createRouter({ history: createWebHistory(), routes });
 const pro = createProPlugin("fk-b50da1a3d1", inputs);

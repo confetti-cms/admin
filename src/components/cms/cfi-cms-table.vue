@@ -18,6 +18,8 @@ const edit = (rowId) => {
 };
 
 const deleteRow = (rowId) => {
+  console.log("rowId", rowId);
+
   generalStore.showModal({
     title: "Weet je het zeker",
     description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales eleifend leo et rhoncus. Quisque elit justo, consectetur at semper quis, aliquam eu sem. Donec imperdiet lacus non risus finibus, id maximus mi feugiat. Praesent et mi semper, tristique nulla non, ornare risus. Donec ullamcorper sollicitudin enim. Donec euismod in magna ut accumsan. Integer gravida quis turpis id lacinia. Mauris vitae augue lacinia, dictum nibh eget, venenatis nibh.
@@ -43,7 +45,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ac ligula v
     :headers="structure.props.headers"
     :actions="structure.props.actions"
     :data="structure.data"
-    multi-select
     @selectRow="selectRows = $event"
   >
     <template #title="{ row }">
@@ -58,8 +59,14 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ac ligula v
     <template #collapedContent> acties </template>
 
     <template #actions="{ row }">
-      <cfi-button @click="deleteRow(row.id)">Remove</cfi-button>
-      <cfi-button @click="edit(row.id)">Edit</cfi-button>
+      <div class="flex gap-3">
+        <cfi-button @click="deleteRow(row.id)" class="p-1" type="clear">
+          <i class="fa-solid fa-trash"></i>
+        </cfi-button>
+        <cfi-button @click="edit(row.id)" class="p-1" type="clear">
+          <i class="fa-solid fa-pencil"></i>
+        </cfi-button>
+      </div>
     </template>
   </cfi-table>
 </template>

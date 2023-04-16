@@ -4,12 +4,76 @@ import CfiButton from "./components/ui/cfi-button.vue";
 import { useGeneralStore } from "./store/general";
 import { useMenuStore } from "./store/menu";
 import { storeToRefs } from "pinia";
+import { reactive } from "vue";
 const generalStore = useGeneralStore();
 const { activeModal } = storeToRefs(generalStore);
 generalStore.loadApp();
 const menuStore = useMenuStore();
 const { menu } = storeToRefs(menuStore);
 const { appLoaded } = storeToRefs(generalStore);
+
+const axios = {
+  post: () => new Promise((r) => setTimeout(r, 2000)),
+};
+
+async function login(credentials) {
+  console.log("credentials", credentials);
+
+  const res = await axios.post(credentials);
+  // do some login things now
+  alert("Logged in!");
+}
+
+// {
+//         "type": "label",
+//         "data": {
+//           "value": "Title of the intro"
+//         }
+//       },
+
+const events = {
+  onSubmit: (test) => login(test),
+};
+
+const cmp = {
+  type: "event",
+  data: {
+    value: {
+      onSubmit: (test) => login(test),
+    },
+  },
+};
+
+console.log("onSubmit", events["onSubmit"]);
+
+const schema = [
+  {
+    $formkit: "form",
+    label: "dsdsds",
+    // events['onSubmit'],
+
+    ...cmp.data.value,
+    // onSubmit: (test) => login(test),
+    children: [
+      {
+        $formkit: "text",
+        name: "email",
+        label: "Email",
+        help: "This will be used for your account.",
+      },
+    ],
+  },
+];
+
+console.log("schema", schema);
+
+const data = reactive({
+  someAttributes: {
+    class: "red",
+    onSubmit: (test) => login(test),
+    "data-fruit": "I like fruit",
+  },
+});
 </script>
 
 <template>
@@ -33,21 +97,22 @@ const { appLoaded } = storeToRefs(generalStore);
                   <i :class="icon" class="text-xl"></i>
                 </div>
                 {{ label }}
-                <ul class="menu-child-menu bg-white top-0" v-if="children">
-                  <li
-                    class="p-3"
-                    v-for="{ label } in children"
-                    :key="`main-menu-child${id}`"
-                  >
-                    {{ label }}
-                  </li>
-                </ul>
               </router-link>
+              <!-- <ul class="menu-child-menu bg-white top-0 " v-if="children">
+                <li
+                  class="p-3"
+                  v-for="{ label } in children"
+                  :key="`main-menu-child${id}`"
+                >
+                  {{ label }}
+                </li>
+              </ul> -->
             </li>
           </ul>
         </nav>
       </div>
       <section class="bg-gray-50 flex-grow px-8 pt-6 overflow-y-scroll">
+        <FormKitSchema :schema="schema" />
         <div class="flex w-full items-center justify-end">
           <FormKit
             type="text"
@@ -77,10 +142,22 @@ const { appLoaded } = storeToRefs(generalStore);
             {{ activeModal.description }}
           </template>
           <template #footer>
-            <cfi-button @click="activeModal.onCancel" type="primary"
-              >Cancel</cfi-button
-            >
-            <cfi-button @click="activeModal.onConfirm">Confirm</cfi-button>
+            <div class="flex items-center py-2 gap-3">
+              <cfi-button
+                @click="activeModal.onCancel"
+                type="clear"
+                class="p-2 w-1/2"
+              >
+                Cancel
+              </cfi-button>
+              <cfi-button
+                type="primary"
+                @click="activeModal.onConfirm"
+                class="p-2 w-1/2"
+              >
+                Confirm
+              </cfi-button>
+            </div>
           </template>
         </cfi-modal>
       </section>
@@ -105,8 +182,8 @@ const { appLoaded } = storeToRefs(generalStore);
 
 .menu-child-menu {
   // visibility: hidden;
-  position: absolute;
-  right: calc(-100% - 40px);
+  // position: absolute;
+  // right: calc(-100% - 40px);
   z-index: 9;
   border-radius: 8px;
   overflow: hidden;

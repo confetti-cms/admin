@@ -67,7 +67,11 @@ const props = defineProps({
   },
   classes: {
     type: String,
-    default: "bg-gray-100",
+    default: "",
+  },
+  roundButton: {
+    type: Boolean,
+    default: false,
   },
   label: {
     type: String,
@@ -83,6 +87,7 @@ const classes = computed(() => {
     [`cfi-button--full`]: props.fullWidth,
     [`cfi-button--disabled`]: props.disabled,
     [`cfi-button--anchor`]: props.anchor,
+    [`rounded-full`]: props.roundButton,
     [`${props.classes}`]: true,
   };
 });
@@ -133,7 +138,13 @@ const classes = computed(() => {
 
   &--primary {
     background: var(--color-primary);
-    // color: white;
+    color: white;
+  }
+  &--clear {
+    transition: background 0.3s ease;
+  }
+  &--clear:hover {
+    background: #efefef;
   }
 
   &--anchor {

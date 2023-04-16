@@ -155,69 +155,6 @@ export const pagesStructure = [
   },
 ];
 
-export const mockPage = [
-  {
-    parent_key: "",
-    key: "/section/intro/title",
-    type: "text",
-    decorations: [
-      {
-        type: "label",
-        data: {
-          value: "Title of the intro",
-        },
-      },
-      {
-        type: "placeholder",
-        data: {
-          value: "Design your website",
-        },
-      },
-      {
-        type: "default",
-        data: {
-          value: "Home",
-        },
-      },
-      {
-        type: "help",
-        data: {
-          value: "Type here the title intro title",
-        },
-      },
-      {
-        type: "required",
-        data: {
-          value: true,
-        },
-      },
-      {
-        type: "minlength",
-        data: {
-          value: 10,
-        },
-      },
-      {
-        type: "maxlength",
-        data: {
-          value: 100,
-        },
-      },
-      {
-        type: "prefix",
-        image_url: "/object/icons/h1.svg",
-      },
-    ],
-    source: {
-      directory: "views",
-      file: "home.blade.php",
-      line: 43,
-      from: 27,
-      to: 34,
-    },
-  },
-];
-
 export const oldMockform = [
   {
     parent_key: "",

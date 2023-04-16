@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import cfiButton from "../cfi-button.vue";
+import cfiButton from "../user-interface/cfi-button.vue";
 import { computed } from "vue";
 const props = defineProps({
   label: {
