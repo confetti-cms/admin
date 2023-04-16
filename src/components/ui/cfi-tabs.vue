@@ -8,8 +8,12 @@ const props = defineProps({
     type: Array,
     default: [],
   },
+  data: {
+    type: Object,
+    default: [],
+  },
 });
-const activeTab = ref(props.tabs[0]);
+const activeTab = ref(props.tabs[0].key);
 </script>
 
 <template>
@@ -17,18 +21,19 @@ const activeTab = ref(props.tabs[0]);
     <div
       v-for="tab in tabs"
       class="bg-gray-400 color-dark confetti-tabs__tab"
-      @click="activeTab = tab"
-      :data-step-active="activeTab === tab"
+      :class="{ ['confetti-tabs__tab--active']: activeTab === tab.key }"
+      @click="activeTab = tab.key"
+      :data-step-active="activeTab === tab.key"
     >
-      {{ tab }}
+      {{ tab.label }}
     </div>
   </div>
 
   <div class="p-2 bg-gray-300 confetti-tabs__active-content">
     <section v-for="tab in tabs">
-      <div v-show="tab === activeTab">
-        <slot :name="tab.replace(' ', '-').toLowerCase()">
-          {{ tab }}
+      <div v-show="tab.key === activeTab">
+        <slot :name="tab.key" :tab="data.data[tab.key]">
+          {{ data.data[tab.key] }}
         </slot>
       </div>
     </section>
@@ -56,6 +61,10 @@ const activeTab = ref(props.tabs[0]);
     flex-grow: 0;
     flex-shrink: 0;
     position: relative;
+
+    &--active {
+      background: white;
+    }
   }
 
   &:last-child {

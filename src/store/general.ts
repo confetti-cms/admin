@@ -17,12 +17,14 @@ export const useGeneralStore = defineStore("general", {
       const menuStore = useMenuStore();
       const pagesStore = usePagesStore();
       await menuStore.getMenu();
-      pagesStore.getPages();
       this.appLoaded = true;
       this.appLoading = false;
     },
     showModal(payload) {
       this.activeModal = payload;
+    },
+    hideModal() {
+      this.activeModal = null;
     },
   },
   getters: {

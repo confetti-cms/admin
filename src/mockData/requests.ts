@@ -1,49 +1,52 @@
 import { mockRequest } from "../api/helpers/mockRequest";
-import { pages } from "./pages";
-import { mainMenu, mainMenu3 } from "./mainMenu";
-import { pageService, bannerService, footerService } from "./serviceContent";
+import { pagesData, pagesStructure } from "./pages";
+import { bannerData } from "./banner";
+import { mainMenu } from "./mainMenu";
+import { oldMockform } from "../mockData/pages";
+import { bannerStructureData, mockBanner } from "../mockData/banner";
+import { footerStructureData, footerData } from "../mockData/footer";
+import { page1 } from "../mockData/forms/page";
 
-export const getPagesRequest = mockRequest(pages, 100);
-export const getMainMenuRequest = mockRequest(mainMenu3, 200);
-export const getServiceStructure = (service) => {
-  let request;
-  switch (service) {
-    case "pages":
-      request = pageService;
-      break;
-    case "banner":
-      request = bannerService;
-      break;
-    case "footer":
-      request = footerService;
-      break;
-    default:
-      "service not found";
-  }
-  return mockRequest(request, 200);
+export const getMainMenuRequest = mockRequest(mainMenu, 200);
+
+// structure of service overview
+export const serviceStructure = {
+  "/section/pages": pagesStructure,
+  "/section/banner": bannerStructureData,
+  "/section/footer": footerStructureData,
 };
 
-export const getServiceData = (service) => {
-  let request;
-  switch (service) {
-    case "pages":
-      request = pages;
-      break;
-    case "banner":
-      request = pages;
-      break;
-    case "footer":
-      request = pages;
-      break;
-    default:
-      "service not found";
-  }
-  return mockRequest(request, 200);
+// data of service overview
+export const serviceData = {
+  "/section/pages": pagesData,
+  "/section/banner/banner~dsdsds": bannerData,
+  "/section/footer/footer~dsdsds": footerData,
+  "/section/pages/page~": pagesData,
+  "/section/banner": bannerData,
+  "/section/footer": footerData,
+};
+
+// mockdata of service detail
+export const serviceDetailMockData = {
+  "/section/pages/page~665627a8-10bd-4fce-be1c-13dc2dc671fd": page1,
+  "/section/pages/page~1234567890": oldMockform,
+  "/section/banner/banner~665627a8-10bd-4fce-be1c-13dc2dc671fd": mockBanner,
+};
+
+export const getServiceStructure = (serviceId) => {
+  const structure = serviceStructure[serviceId];
+  return mockRequest(structure, 200);
+};
+
+export const getServiceData = (serviceId) => {
+  const data = serviceData[serviceId];
+  return mockRequest(data, 200);
 };
 
 export const getService = (service) => {
-  return mockRequest(
-    Promise.all([getServiceStructure(service)(), getServiceData(service)()]),
-    200
-  );
+  return mockRequest(Promise.all([getServiceStructure(service)()]), 200);
+};
+
+export const getServiceDetailData = (service) => {
+  return mockRequest(serviceDetailMockData[service], 200);
 };
